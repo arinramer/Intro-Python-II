@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -37,6 +38,44 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+player = Player(input('Enter Name: '), room['outside'])
+
+err = '\033[91m' + 'You cannot travel in that direction' + '\033[0m'
+
+color = '\033[94m'
+
+print('Enter Q to quit at any time' + '\033[0m')
+
+for i in range(100):
+    print(color + '\033[1m' + color + "\033[4m" + player.currentRoom.name)
+    print('\033[0m' + player.currentRoom.description)
+    dir = input('Enter N, S, E or W to pick a direction: ').upper()
+    if dir == "N":
+        if hasattr(player.currentRoom, "n_to"):
+            player.currentRoom = player.currentRoom.n_to
+            color = "\033[92m"
+        elif not hasattr(player.currentRoom, "n_to"):
+            print(err)
+    elif dir == "S":
+        if hasattr(player.currentRoom, "s_to"):
+            player.currentRoom = player.currentRoom.s_to
+            color = "\033[94m"
+        elif not hasattr(player.currentRoom, "s_to"):
+            print(err)
+    elif dir == "E":
+        if hasattr(player.currentRoom, "e_to"):
+            player.currentRoom = player.currentRoom.e_to
+            color = "\033[95m"
+        elif not hasattr(player.currentRoom, "e_to"):
+            print(err)
+    elif dir == "W":
+        if hasattr(player.currentRoom, "w_to"):
+            player.currentRoom = player.currentRoom.w_to
+            color = "\033[96m"
+        elif not hasattr(player.currentRoom, "w_to"):
+            print(err)
+    elif dir == "Q":
+        exit()
 # Make a new player object that is currently in the 'outside' room.
 
 # Write a loop that:
